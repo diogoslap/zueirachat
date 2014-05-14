@@ -25,6 +25,7 @@ Não é necessário acrescentar o npm, pois ele já está incluído nesse reposi
 Após a instalação, verifique a versão do nodejs e do npm
 
 node -v
+
 npm -v
 
 Passo 2
