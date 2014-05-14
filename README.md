@@ -11,7 +11,9 @@ A versão utilizada nesse app é o 0.10 e o NPM 1.4.9
 Como utilizei o Ubuntu para o desenvolvimento, utilizarei ele como base para instalação
 
 apt-get install python-software-properties
+
 apt-add-repository ppa:chris-lea/node.js
+
 apt-get update
 
 Após isso execute
