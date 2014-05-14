@@ -48,7 +48,6 @@ io.sockets.on('connection',function(socket){
    });
    socket.on('disconnect', function () { // Disconnection of the client
 	users -= 1;
-	reloadUsers();
 	if (pseudoSet(socket))
 	{
 	   var pseudo;
@@ -59,6 +58,7 @@ io.sockets.on('connection',function(socket){
 	   pseudoArray.splice(index, 1);
 	   connectedUsers(pseudo,false);
 	}
+	reloadUsers();
    });
 });
 

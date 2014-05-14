@@ -67,7 +67,7 @@ function setPseudo(){
   $('#Mensagens').show();
 	$('#pseudoInput').hide();
 	$('#pseudoSet').hide();
-  $("notify").html();
+  $("notify").html('');
   }else{
     $("#notify").html("Apelido já existe, escolha outro.");
   }
