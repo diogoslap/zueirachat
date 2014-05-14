@@ -29,9 +29,9 @@ Passo 2
 
 Instalar os modulos utilizados no projeto
 Os módulos utilizados foram: express, socket.io,  ejs
-Utilizei o ejs para manter a típica estrutura html. Alguns utilizam [jade](http://jade-lang.com/).
+Utilizei o ejs para manter a típica estrutura html. Alguns utilizam [jade](http://jade-lang.com/) para gerar o html.
 
-para instalar eles basta executar o comando
+Para instalar os módulos do projeto, basta executar o comando
 
  - npm install express socket.io ejs
 
