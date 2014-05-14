@@ -1,7 +1,7 @@
 zueirachat
 ==========
 
-O zueirachat é um app desenvolvido em NodeJs utilizando Express. Para utilizá-lo você deverá ter
+O zueirachat é um app desenvolvido em NodeJs utilizando Express, feito para fins de estudos. Para utilizá-lo você deverá ter
 o ambiente para rodar e testar o ZueiraChat.
 
 Primeiro Passo
