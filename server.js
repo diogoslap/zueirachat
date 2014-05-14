@@ -34,9 +34,12 @@ io.sockets.on('connection',function(socket){
    socket.on('setPseudo', function (data) { // Assign a name to the user
 	if (pseudoArray.indexOf(data) == -1) // Test if the name is already taken
 	{
-		connectedUsers(data,true);
+		connectedUsers(data,true);		
 	    socket.set('pseudo', data, function(){
 	    pseudoArray.push(data);
+	    listUsers();
+	    var address = socket.handshake.address;
+	    console.log("Ip: "+address.address)
 	    socket.emit('pseudoStatus', {'user':data,'status':'ok'});
 	    console.log("user " + data + " connected");
 	    });
@@ -57,6 +60,7 @@ io.sockets.on('connection',function(socket){
 	   var index = pseudoArray.indexOf(pseudo);
 	   pseudoArray.splice(index, 1);
 	   connectedUsers(pseudo,false);
+	   listUsers();
 	}
 	reloadUsers();
    });

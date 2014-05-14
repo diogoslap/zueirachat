@@ -1,8 +1,9 @@
 
 $(function() {
-  var listUsers = [];
+  
     $("#chatControls").hide();
     $("#Mensagens").hide();
+    $("#nbUsersDiv").hide();
     $("#pseudoSet").click(function() {setPseudo()});
     $("#submit").click(function() {sentMessage();});
 
@@ -12,78 +13,98 @@ $(function() {
              sentMessage();
         }
     });
-    console.log(listUsers);
-    
+    $("#pseudoInput").keypress(function(e){
+      var keycode = (e.keyCode ? e.keyCode : e.which);
+        if (keycode == '13') {
+             setPseudo();
+      }
+    });
 });
-
+//Socket
 var socket = io.connect();
-//Ainda a implementar
-socket.on('connect', function() {
-	$("#statusServer").val('Conectado');
-});
-//Indica qual usuário se conectou ao chat
-socket.on('userOn', function(data){
-  var mensagens = $("#Mensagens");
-  mensagens.html(mensagens.html()+'Usuário ' +data.user+' conectado\n');
-});
-//Retorna lista de usuarios atuais
-socket.on('listUsers', function(data){
-  console.log(data)
-  listUsers = data.list
-});
-//Indica qual usuário está off
-socket.on('userOff', function(data){
-  var mensagens = $("#Mensagens");
-  mensagens.html(mensagens.html()+'Usuário ' +data.user+' desconectado\n');
-});
-//Recebe as mensagens do server
-socket.on('message', function(data){
-  window_focus = false;
-  $(window).focus(function(){
-    window_focus = true;
+  //Ainda a implementar
+  socket.on('connect', function() {
+    $("#statusServer").val('Conectado');
   });
-  
-  if(!window_focus){
-    newMessageComing();
-  }
-   addMessage(data['message'],data['pseudo']);
-});
+  //Alert user connected
+  socket.on('userOn', function(data){
+    var mensagens = $("#Mensagens");
+    mensagens.html(mensagens.html()+'Usuário ' +data.user+' conectado\n');
+  });
 
-socket.on('nbUsers', function(msg) {
-	$("#nbUsers").html(msg.nb);
-});
-//Adiciona mensagens na box do chat
+  //Return the Actual User list
+  socket.on('listUsers', function(data){
+    listUsers = data.list
+  });
+
+  //Alert user disconnect
+  socket.on('userOff', function(data){
+    var mensagens = $("#Mensagens");
+    mensagens.html(mensagens.html()+'Usuário ' +data.user+' desconectado\n');
+  });
+
+  //Receive the messages of users
+  socket.on('message', function(data){
+    var window_focus = false;
+    $(window).focus(function(){
+      window_focus = true;
+    });
+    
+    if(!window_focus){
+      newMessageComing();
+    }
+     addMessage(data['message'],data['pseudo']);
+  });
+  //Users count
+  socket.on('nbUsers', function(msg) {
+    $("#nbUsers").html(msg.nb);
+  });
+
+//User List
+var listUsers = [];
+
+//Add messages in the chat box
 function addMessage(msg, pseudo){
    var mensagens = $("#Mensagens");
    mensagens.html(mensagens.html()+pseudo+' : '+msg+'\n');
    $('#Mensagens').scrollTop($('#Mensagens')[0].scrollHeight);
 }
 
-//Envia as mensagens pro server
+//Sent Messages to the server
 function sentMessage(){
    if($('#messageInput').val() != "")
    {
-	socket.emit('message',$('#messageInput').val());
-	addMessage($('#messageInput').val(),"Me",new Date().toISOString(),true);
-	$('#messageInput').val('');
+    var pseudo = $("#pseudoInput").val();
+	  socket.emit('message',$('#messageInput').val());
+	  addMessage($('#messageInput').val(),pseudo,new Date().toISOString(),true);
+	  $('#messageInput').val('');
    }
 }
-//Valida se apelido já existe
+//Validate pseudo
 function setPseudo(){
   var pseudo = $.trim($("#pseudoInput").val());
-
-  if(pseudo != "" && listUsers.indexOf(pseudo) == -1){
-	socket.emit('setPseudo', $("#pseudoInput").val());
-	$('#chatControls').show();
-  $('#Mensagens').show();
-	$('#pseudoInput').hide();
-	$('#pseudoSet').hide();
-  $("notify").html('');
-  }else{
-    $("#notify").html("Apelido já existe, escolha outro.");
-  }
+    if(pseudo == ""){
+       $("#notify").html("Insira um apelido.");
+    }
+    else if(listUsers.indexOf(pseudo) == -1){
+      //Send pseudo to validate
+    	socket.emit('setPseudo', $("#pseudoInput").val());
+      //Return if the pseudo is avaible
+      socket.on('pseudoStatus', function(data) {
+        if(data.status=="ok"){
+          $('#chatControls').show();
+          $('#Mensagens').show();
+          $('#nbUsersDiv').show();
+          $('#pseudoInput').hide();
+          $('#pseudoSet').hide();
+          $("#notify").html('');
+        }else{
+          $("#notify").html("Apelido já existe, escolha outro.");
+        }
+      });
+    }
 }
-//Alerta nova mensagem no titulo do site
+//Alert new message in the title of the site
 function newMessageComing(){
  
   var isOldTitle = true;
@@ -101,4 +122,10 @@ function newMessageComing(){
       clearInterval(interval);
       $("title").text(oldTitle);
   });
+}
+
+function initConnection(){
+  
+  
+  return socket;
 }
