@@ -1,13 +1,11 @@
 zueirachat
 ==========
 
-O zueirachat é um app desenvolvido em NodeJs utilizando Express, feito para fins de estudos. Para utilizá-lo você deverá ter
-o ambiente para rodar e testar o ZueiraChat.
+The zueirachat is an app developed using NodeJS and Express , made for study purposes .To use it you must have the environment to run and test the ZueiraChat.
 
-Primeiro Passo
+Step 1
 
-Instalar o NodeJs. A versão utilizada nesse app é o 0.10 e o NPM 1.4.9
-Como utilizei o Ubuntu para o desenvolvimento, utilizarei ele como base para instalação
+Install NodeJS . The version used in this app is the 0.10 and the NPM 1.4.9. How I used Ubuntu for development, will use it as a base for installation
 
 apt-get install python-software-properties
 
@@ -15,34 +13,32 @@ apt-add-repository ppa:chris-lea/node.js
 
 apt-get update
 
-Após isso execute
+After this, execute:
 
 apt-get install nodejs
 
-Não é necessário acrescentar o npm, pois ele já está incluído nesse repositório.
+It is not necessary to add the npm , since it is already included in that repository.
 
-Após a instalação, verifique a versão do nodejs e do npm
+After installation , check the version of nodejs and npm
 
-node -v
+node- v
 
 npm -v
 
-Passo 2
+Step 2
 
-Instalar os modulos utilizados no projeto
-Os módulos utilizados foram: express, socket.io,  ejs
-Utilizei o ejs para manter o template na típica estrutura html. Alguns utilizam [jade](http://jade-lang.com/) para template.
+Install the modules used in the project. The modules were used : express , socket.io , ejs. Used the ejs to keep the template in html typical structure. Some use jade template for .
 
-Para instalar os módulos do projeto, basta executar o comando
+To install the modules of the project, simply run the command
 
- - npm install express socket.io ejs
+    npm install socket.io express ejs
 
-Caso de algum erro, execute como root.
+If any error, run as root .
 
-Em seguida para executar a aplicação
+Then to run the application
 
-- node server.js
+    node server.js
 
-E o zueirachat já estará no caminho http://localhost:3000
+And zueirachat already be on the way http://localhost:3000
 
-Bons estudos!
+Good studies !
