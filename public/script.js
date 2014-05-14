@@ -20,6 +20,8 @@ $(function() {
       }
     });
 });
+//Pseudo
+var pseudo = "";
 //Socket
 var socket = io.connect();
   //Ainda a implementar
@@ -28,6 +30,9 @@ var socket = io.connect();
   });
   //Alert user connected
   socket.on('userOn', function(data){
+    if(hasPseudo()){
+      return false
+    }
     var mensagens = $("#Mensagens");
     mensagens.html(mensagens.html()+'Usuário ' +data.user+' conectado\n');
   });
@@ -39,12 +44,18 @@ var socket = io.connect();
 
   //Alert user disconnect
   socket.on('userOff', function(data){
+    if(hasPseudo()){
+      return false
+    }
     var mensagens = $("#Mensagens");
     mensagens.html(mensagens.html()+'Usuário ' +data.user+' desconectado\n');
   });
 
   //Receive the messages of users
   socket.on('message', function(data){
+    if(hasPseudo()){
+      return false
+    }
     var window_focus = false;
     $(window).focus(function(){
       window_focus = true;
@@ -74,15 +85,14 @@ function addMessage(msg, pseudo){
 function sentMessage(){
    if($('#messageInput').val() != "")
    {
-    var pseudo = $("#pseudoInput").val();
-	  socket.emit('message',$('#messageInput').val());
-	  addMessage($('#messageInput').val(),pseudo,new Date().toISOString(),true);
+    socket.emit('message',$('#messageInput').val());
+	  addMessage($('#messageInput').val(),pseudo.toString(),new Date().toISOString(),true);
 	  $('#messageInput').val('');
    }
 }
 //Validate pseudo
 function setPseudo(){
-  var pseudo = $.trim($("#pseudoInput").val());
+  pseudo = $.trim($("#pseudoInput").val());
     if(pseudo == ""){
        $("#notify").html("Insira um apelido.");
     }
@@ -125,7 +135,9 @@ function newMessageComing(){
 }
 
 function initConnection(){
-  
-  
   return socket;
+}
+
+function hasPseudo(){
+    return pseudo == "";
 }
