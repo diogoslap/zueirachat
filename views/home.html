@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+   <head>
+       <title>Zueira Chat - The Zueira Never Ends</title>
+       <link rel="stylesheet" href="style.css">
+       <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+       <script src="/socket.io/socket.io.js"></script><script src="script.js"></script>
+   </head>
+   <body>
+       <div class="container">
+           <header>
+               <h1>Zueira Chat</h1>
+           </header>
+           <div class="group">
+                <textarea id="Mensagens"></textarea>
+                <div class="controls">
+                      <input type="text" id="pseudoInput">
+                      <button id="pseudoSet">Apelido</button>
+                      <div id="chatControls">
+                          <input type="text" id="messageInput">
+                              <button id="submit">Send</button>
+                          </div>
+                          <div id="nbUsersDiv">
+                               <p>Há <span id="nbUsers"></span>&nbsp;usuário(s) conectado(s).</p>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </body>
+ </html>
