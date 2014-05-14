@@ -38,7 +38,14 @@ socket.on('userOff', function(data){
 });
 //Recebe as mensagens do server
 socket.on('message', function(data){
-   newMessageComing();
+  window_focus = false;
+  $(window).focus(function(){
+    window_focus = true;
+  });
+  
+  if(!window_focus){
+    newMessageComing();
+  }
    addMessage(data['message'],data['pseudo']);
 });
 
