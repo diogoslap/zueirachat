@@ -1,2 +1,33 @@
 
- #Mensagens { width: 430px; height: 500px; border-radius: 5px; border: solid 1px gray; background: whitesmoke; padding: 15px; font-family: "Inconsolata", monospace; font-size: small; line-height: 1.2; }
+#Mensagens { 
+ display: inline-block;
+ margin: 0px;
+ height: 605px;
+ max-width: 412px;
+ min-width: 412px;
+ overflow-x: hidden;
+ max-height: 550px;
+ min-height: 550px;
+ width: 544px;
+ overflow-y: auto;
+ border: solid 10px lightgray;
+ border-radius: 5px;
+ background: whitesmoke;
+ resize: none;
+ padding: 15px;
+ line-height: 1.2em;
+ font-family: 'Inconsolata', monospace;
+ font-size: small;
+ }
+
+ #header h1 {
+   font-family: "Inconsolata", monospace;
+   margin: 0;
+   padding: 16px;
+   border: solid 32px whitesmoke;
+   width: 366px;
+   border-radius: 10px;
+ }
+ #notify {
+ 	color:red;
+ }

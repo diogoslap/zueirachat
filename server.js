@@ -23,6 +23,7 @@ var users = 0;
 io.sockets.on('connection',function(socket){
    users+=1;
    reloadUsers();
+   listUsers();
    socket.on('message', function (message) {
     socket.get('pseudo', function (error, name) {
         var data = { 'message' : message, pseudo : name };
@@ -36,13 +37,13 @@ io.sockets.on('connection',function(socket){
 		connectedUsers(data,true);
 	    socket.set('pseudo', data, function(){
 	    pseudoArray.push(data);
-	    socket.emit('pseudoStatus', 'ok');
+	    socket.emit('pseudoStatus', {'user':data,'status':'ok'});
 	    console.log("user " + data + " connected");
 	    });
 	}
 	else
 	{
-	    socket.emit('pseudoStatus', 'error') // Send the error
+	    socket.emit('pseudoStatus', {'user':data,'status':'error'}) // Send the error
 	}
    });
    socket.on('disconnect', function () { // Disconnection of the client
@@ -63,6 +64,9 @@ io.sockets.on('connection',function(socket){
 
 function reloadUsers() { // Send the count of the users to all
 	io.sockets.emit('nbUsers', {"nb": users});
+}
+function listUsers() { // Send the count of the users to all
+	io.sockets.emit('listUsers', {"list": pseudoArray});
 }
 function connectedUsers(user, status){
 	if(status){

@@ -1,4 +1,6 @@
+
 $(function() {
+  var listUsers = [];
     $("#chatControls").hide();
     $("#Mensagens").hide();
     $("#pseudoSet").click(function() {setPseudo()});
@@ -10,6 +12,7 @@ $(function() {
              sentMessage();
         }
     });
+    console.log(listUsers);
 });
 
 var socket = io.connect();
@@ -22,6 +25,12 @@ socket.on('userOn', function(data){
   var mensagens = $("#Mensagens");
   mensagens.html(mensagens.html()+'Usuário ' +data.user+' conectado\n');
 });
+
+socket.on('listUsers', function(data){
+  console.log(data)
+  listUsers = data.list
+});
+
 socket.on('userOff', function(data){
   var mensagens = $("#Mensagens");
   mensagens.html(mensagens.html()+'Usuário ' +data.user+' desconectado\n');
@@ -30,6 +39,7 @@ socket.on('userOff', function(data){
 socket.on('message', function(data){
    addMessage(data['message'],data['pseudo']);
 });
+
 socket.on('nbUsers', function(msg) {
 	$("#nbUsers").html(msg.nb);
 });
@@ -49,12 +59,17 @@ function sentMessage(){
    }
 }
 function setPseudo(){
-   if($("#pseudoInput").val() != ""){
+  var pseudo = $("#pseudoInput").val();
+
+  if(pseudo != "" && listUsers.indexOf(pseudo) == -1){
 	socket.emit('setPseudo', $("#pseudoInput").val());
 	$('#chatControls').show();
   $('#Mensagens').show();
 	$('#pseudoInput').hide();
 	$('#pseudoSet').hide();
-   }
+  $("notify").html();
+  }else{
+    $("#notify").html("Apelido já existe, escolha outro.");
+  }
 }
 
