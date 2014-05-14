@@ -6,8 +6,7 @@ o ambiente para rodar e testar o ZueiraChat.
 
 Primeiro Passo
 
-Instalar o NodeJs
-A versão utilizada nesse app é o 0.10 e o NPM 1.4.9
+Instalar o NodeJs. A versão utilizada nesse app é o 0.10 e o NPM 1.4.9
 Como utilizei o Ubuntu para o desenvolvimento, utilizarei ele como base para instalação
 
 apt-get install python-software-properties
@@ -32,7 +31,7 @@ Passo 2
 
 Instalar os modulos utilizados no projeto
 Os módulos utilizados foram: express, socket.io,  ejs
-Utilizei o ejs para manter a típica estrutura html. Alguns utilizam [jade](http://jade-lang.com/) para gerar o html.
+Utilizei o ejs para manter o template na típica estrutura html. Alguns utilizam [jade](http://jade-lang.com/) para template.
 
 Para instalar os módulos do projeto, basta executar o comando
 
