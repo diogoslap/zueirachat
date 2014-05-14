@@ -39,6 +39,6 @@ Then to run the application
 
     node server.js
 
-And zueirachat already be on the way http://localhost:3000
+Now, zueirachat already be on the way http://localhost:3000
 
 Good studies !
