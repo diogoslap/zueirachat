@@ -21,13 +21,15 @@ $(function() {
     });
 });
 //Pseudo
-var pseudo = "";
+var pseudo = $.trim($("#pseudoInput").val());
 //Socket
 var socket = io.connect();
   //Ainda a implementar
   socket.on('connect', function() {
+    console.log(pseudo);
     if(pseudo!= ""){
-      socket.emit('listUsers',pseudo);
+      socket.emit('reconnected',pseudo);
+      showChat();
     }
     $("#statusServer").val('Conectado');
   });
@@ -115,6 +117,8 @@ function setPseudo(){
           $("#notify").html("Apelido já existe, escolha outro.");
         }
       });
+    }else{
+      $("#notify").html("Apelido já existe, escolha outro.");
     }
 }
 //Alert new message in the title of the site
@@ -143,4 +147,13 @@ function initConnection(){
 
 function hasPseudo(){
     return pseudo == "";
+}
+
+function showChat(){
+  $('#chatControls').show();
+  $('#Mensagens').show();
+  $('#nbUsersDiv').show();
+  $('#pseudoInput').hide();
+  $('#pseudoSet').hide();
+ $ ("#notify").html('');
 }

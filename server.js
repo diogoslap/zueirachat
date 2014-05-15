@@ -50,9 +50,16 @@ io.sockets.on('connection',function(socket){
 	    socket.emit('pseudoStatus', {'user':data,'status':'error'}) // Send the error
 	}
    });
-   socket.on('listUsers', function(data){
+   socket.on('reconnected', function(data){
+   		var index = pseudoArray.indexOf(data);
+	    pseudoArray.splice(index, 1);
+	    connectedUsers(data,false);
    		pseudoArray.push(data);
-   		console.log("user " + data + " reconnected");
+   		socket.set('pseudo', data, function(){
+	   		connectedUsers(data,true);
+	   		console.log("user " + data + " reconnected");
+   		});
+
    		listUsers();
    });
    socket.on('disconnect', function () { // Disconnection of the client
@@ -65,8 +72,9 @@ io.sockets.on('connection',function(socket){
 	   });
 	   var index = pseudoArray.indexOf(pseudo);
 	   pseudoArray.splice(index, 1);
-	   connectedUsers(pseudo,false);
 	   listUsers();
+	   connectedUsers(pseudo,false);
+	   console.log("user " + pseudo + " disconnected");
 	}
 	reloadUsers();
 
