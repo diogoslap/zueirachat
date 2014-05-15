@@ -24,6 +24,8 @@ io.sockets.on('connection',function(socket){
    users+=1;
    reloadUsers();
    listUsers();
+   var address = socket.handshake.address;
+	console.log("Ip: "+address.address)
    socket.on('message', function (message) {
     socket.get('pseudo', function (error, name) {
         var data = { 'message' : message, pseudo : name };
@@ -38,8 +40,7 @@ io.sockets.on('connection',function(socket){
 	    socket.set('pseudo', data, function(){
 	    pseudoArray.push(data);
 	    listUsers();
-	    var address = socket.handshake.address;
-	    console.log("Ip: "+address.address)
+	    
 	    socket.emit('pseudoStatus', {'user':data,'status':'ok'});
 	    console.log("user " + data + " connected");
 	    });
@@ -48,6 +49,11 @@ io.sockets.on('connection',function(socket){
 	{
 	    socket.emit('pseudoStatus', {'user':data,'status':'error'}) // Send the error
 	}
+   });
+   socket.on('listUsers', function(data){
+   		pseudoArray.push(data);
+   		console.log("user " + data + " reconnected");
+   		listUsers();
    });
    socket.on('disconnect', function () { // Disconnection of the client
 	users -= 1;
@@ -63,6 +69,7 @@ io.sockets.on('connection',function(socket){
 	   listUsers();
 	}
 	reloadUsers();
+
    });
 });
 

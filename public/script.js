@@ -26,6 +26,9 @@ var pseudo = "";
 var socket = io.connect();
   //Ainda a implementar
   socket.on('connect', function() {
+    if(pseudo!= ""){
+      socket.emit('listUsers',pseudo);
+    }
     $("#statusServer").val('Conectado');
   });
   //Alert user connected
